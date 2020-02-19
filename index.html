@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="css/framework.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" integrity="sha384-v8BU367qNbs/aIZIxuivaU55N5GPF89WBerHoGA4QTcbUjYiLQtKdrfXnqAcXyTv" crossorigin="anonymous">    <title>Code 4 Hire quote</title>
+  </head>
+  <body>
+    <section class="bg-gray-300 font-sans">
+      <div class="container m-auto flex flex-col md:flex-row max-w-xl">
+          <div class="flex flex-col w-full lg:w-1/2 justify-center items-start py-8">
+            <label for="tagline" class="uppercase tracking-loose mb-4 text-6xl">Code4hire Development estimate</label>
+            <p class="leading-normal">Are you interested in us helping you build your dream?</p>
+            <p class="leading-normal mb-6">Get yourself an estimation of how much it will cost you to build your solution.</p>
+          
+            <button id="get-started" class="bg-transparent hover:bg-black text-black font-semibold hover:text-white py-2 px-4 border border-black hover:border-transparent">
+                Get started
+            </button>
+          </div>
+
+          <div class="my-16 w-full lg:w-1/2 lg:py-6">
+            <img src="img/hero.png" alt="image" class="w-full" />
+          </div>
+      </div>
+    </section>
+
+    <section id="feature-picker" class="my-8 font-sans container m-auto max-w-xl">
+      <div class="text-center">
+        <h1 class="my-4 text-4xl">Build your solution</h1>
+        <p class="leading-normal mb-4 max-w-sm m-auto">Pick features that you would like to be involved in your solution.</p>
+      </div>
+      <div id="feature-list" class="flex flex-col sm:flex-row flex-wrap my-8">
+        <template id="feature-template">
+          <div class="w-full sm:w-1/2 md:w-1/3 flex flex-col items-center justify-center h-48 md:h-64 border-gray-300 border-r border-b hover:shadow-md hover:border-0 bg-white hover:transform-scale-subtle transition-normal hover:show-child">
+            <div class="feature-icon w-12 h-12 text-center" alt=""></div>
+            <h3 class="mt-4 mb-1 feature-title"></h3>
+            <p class="feature-description mt-4 text-center text-gray-700 leading-normal px-6 hidden hover:block"></p>
+          </div>
+        </template>
+      </div>
+    </section>
+
+    <section class="bg-white py-4 font-sans">
+      <div class="container max-w-xl m-auto flex flex-wrap md:flex-no-wrap items-center justify-center">
+        <h1 class="w-full md:w-1/4 font-medium tracking-normal mb-4 md:mb-0">Quote total</h1>
+        <div class="w-1/3 md:w-1/4">
+          <span class="text-xs inline-block mr-2 uppercase text-gray-900 tracking-wide">R</span>
+          <h2 id="quote-amount" class="inline-block">0.00</h2>
+        </div>
+      </div>
+    </section>
+  
+    <form class="font-sans text-sm rounded w-full max-w-md mx-auto my-8 px-8 pt-6 pb-8">
+      <div class="relative border rounded mb-4 shadow appearance-none label-floating">
+        <input class="w-full py-2 px-3 text-gray-700 leading-normal rounded" id="name" type="text" placeholder="Your name">
+        <label class="absolute block text-gray-700 top-0 left-0 w-full px-3 py-2 leading-normal" for="name">
+          Your name
+        </label>
+      </div>
+      <div class="relative border rounded mb-4 shadow appearance-none label-floating">
+        <input class="w-full py-2 px-3 text-gray-700 leading-normal rounded" id="phone-number" type="text" placeholder="Phone number">
+        <label class="absolute block text-gray-700 top-0 left-0 w-full px-3 py-2 leading-normal" for="phone-number">
+          Phone number
+        </label>
+      </div>
+      <div class="relative border rounded mb-4 shadow appearance-none label-floating">
+        <input class="w-full py-2 px-3 text-gray-700 leading-normal rounded" id="email" type="text" placeholder="Email address">
+        <label class="absolute block text-gray-700 top-0 left-0 w-full px-3 py-2 leading-normal" for="email">
+          Email address
+        </label>
+      </div>
+      <div class="flex items-center justify-between">
+        <button class="bg-black hover:bg-black text-white py-2 px-4" type="button">
+        Send
+        </button>
+      </div>
+    </form>
+
+    <footer class="font-sans bg-black text-white py-8 px-4">
+      <div class="mx-auto max-w-xl overflow-hidden flex justify-between items-center">
+        <p class="inline-block py-2 px-3 text-gray-700 text-xs text-center"> &copy; 2020 Code4Hire. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      (function() {
+        let quote = new Set();
+        let total = 0;
+        const featureFragment = document.getElementById('feature-template');
+        const features = [
+          {
+            title: 'Web application',
+            icon: 'fas fa-globe',
+            description: 'Web application description',
+            cost: 20000
+          },
+          {
+            title: 'Android application',
+            icon: 'fab fa-android',
+            description: 'Android application description',
+            cost: 30000
+          },
+          {
+            title: 'IOS application',
+            icon: 'fab fa-apple',
+            description: 'IOS application description',
+            cost: 40000
+          }
+        ];
+
+        features.forEach(feature => {
+          const fragmentInstance = document.importNode(featureFragment.content, true);
+          fragmentInstance.querySelector('.feature-title').innerHTML = feature.title;
+          fragmentInstance.querySelector('.feature-description').innerHTML = feature.description;
+          fragmentInstance.querySelector('.feature-icon').innerHTML = `<i class="${feature.icon} text-5xl text-gray-300"></1>`;
+          document.getElementById('feature-list').appendChild(fragmentInstance);
+        });
+
+        document.getElementById('get-started').addEventListener(
+          'click',
+          event => {
+            document.getElementById('feature-picker').scrollIntoView({ behavior: 'smooth' });
+          }
+        );
+
+        document.querySelector(".features").addEventListener(
+          "click",
+          event => {
+            if (event.target.nodeName !== "BUTTON") {
+              return;
+            }
+
+            let service = event.target.dataset;
+            let serviceCosts = [];
+
+            if (!quote.has(service)) {
+              quote.add(service);
+            } else {
+              quote.delete(service);
+            }
+
+            quote.forEach(x => serviceCosts.push(parseFloat(x.cost)));
+
+            if (serviceCosts.length != 0)
+              total = serviceCosts.reduce((a, b) => a + b);
+            else total = 0;
+
+            console.log(total);
+          },
+          false
+        );
+      })();
+    </script>
+  </body>
+</html>
